@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   scope :preview do
     get 'master' => 'preview#master'
+    get 'test1' => 'preview#test1'
   end
 
   namespace :api, format: :json do

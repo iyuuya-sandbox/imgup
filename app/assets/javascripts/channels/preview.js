@@ -11,9 +11,18 @@ App.preview = App.cable.subscriptions.create('PreviewChannel', {
     console.log('preview_channel: received')
     const preview = new Preview(data.data)
     preview.master()
+    preview.test1()
   },
 
   // show (datum) {
   //   this.perform('show', { datum })
   // }
+})
+
+$(() => {
+  $.get('/api/v1/images.json', (data) => {
+    const preview = new Preview(data.data)
+    preview.master()
+    preview.test1()
+  })
 })
