@@ -8,6 +8,8 @@ class PreviewChannel < ApplicationCable::Channel
   end
 
   def show(data)
-    ActionCable.server.broadcast 'preview_channel', image: data['image']
+    logger.debug data
+    # ActionCable.server.broadcast 'preview_channel', image: data['image']
+    ActionCable.server.broadcast 'preview_channel', data
   end
 end

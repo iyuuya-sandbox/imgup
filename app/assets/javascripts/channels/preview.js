@@ -7,12 +7,13 @@ App.preview = App.cable.subscriptions.create('PreviewChannel', {
     // Called when the subscription has been terminated by the server
   },
 
-  received(image) {
-    const preview = new Preview()
-    preview.master(image)
+  received(data) {
+    console.log('preview_channel: received')
+    const preview = new Preview(data.data)
+    preview.master()
   },
 
-  show (image) {
-    this.perform('show', { image })
-  }
+  // show (datum) {
+  //   this.perform('show', { datum })
+  // }
 })
