@@ -8,7 +8,8 @@ App.preview = App.cable.subscriptions.create('PreviewChannel', {
   },
 
   received(image) {
-    $('#preview').html($('<img>', { src: image.image }))
+    const preview = new Preview()
+    preview.index(image)
   },
 
   show (image) {
