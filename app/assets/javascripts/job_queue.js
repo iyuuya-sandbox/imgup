@@ -21,6 +21,10 @@ class JobQueue {
       if (this.queue.length > 0) this.run(this.queue.shift())
     }, this.delay)
   }
+
+  length() {
+    return this.queue.length
+  }
 }
 
 this.App || (this.App = {});

@@ -12,6 +12,7 @@ App.preview = App.cable.subscriptions.create('PreviewChannel', {
     const preview = new Preview(data.data)
     preview.master()
     preview.test1()
+    preview.test2()
   },
 
   // show (datum) {
@@ -23,6 +24,7 @@ $(() => {
   $.get('/api/v1/images.json', (data) => {
     const preview = new Preview(data.data)
     preview.master()
-    preview.test1()
+    // preview.test1()
+    preview.test2()
   })
 })
