@@ -9,7 +9,7 @@ App.preview = App.cable.subscriptions.create('PreviewChannel', {
 
   received(image) {
     const preview = new Preview()
-    preview.index(image)
+    preview.master(image)
   },
 
   show (image) {

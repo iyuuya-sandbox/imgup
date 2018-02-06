@@ -2,5 +2,7 @@ Rails.application.routes.draw do
   root 'images#new'
   post 'images' => 'images#create'
 
-  get 'preview' => 'preview#index'
+  scope :preview do
+    get 'master' => 'preview#master'
+  end
 end

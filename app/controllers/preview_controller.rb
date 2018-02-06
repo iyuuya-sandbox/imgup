@@ -1,5 +1,5 @@
 class PreviewController < ApplicationController
-  def index
+  def master
     @image = Image.last
   end
 end
