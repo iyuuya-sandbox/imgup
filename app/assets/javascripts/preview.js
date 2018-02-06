@@ -10,14 +10,10 @@ class Preview {
   }
 
   test1() {
-    const duration = 5 * 1000 // per 10 sec
-    const count = this.data.length
-    console.log(count)
-    for (let i = 0; i < count; i++) {
-      setTimeout(() => {
-        const datum = this.data[i]
+    for (const datum of Array.from(this.data)) {
+      App.job_queue.add_job(() => {
         $('#preview-test1').html($('<img>', { src: datum.attributes.image_url }))
-      }, duration * i)
+      })
     }
   }
 }
