@@ -1,4 +1,8 @@
 <%= form_for @image do |f| %>
-  <%= f.file_field :image %>
-  <%= f.submit 'アップロード' %>
+  <div class="input-group">
+    <%= f.file_field :image %>
+  </div>
+  <div class="input-group">
+    <%= f.submit 'アップロード', class: 'submit-btn' %>
+  </div>
 <% end %>
