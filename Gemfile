@@ -35,6 +35,7 @@ gem 'fast_jsonapi'
 # gem 'capistrano-rails', group: :development
 
 gem 'carrierwave'
+gem 'rmagick'
 gem 'jquery-rails'
 
 group :development, :test do
