@@ -7,7 +7,9 @@ class ImagesController < ApplicationController
     Image.create! params.required(:image).permit(:image)
     @image = Image.new
     redirect_to root_path
-  rescue
+  rescue => e
+    logger.debug e.message
+    logger.debug e.backtrace.join("\n")
     redirect_to root_path
   end
 end
