@@ -1,11 +1,32 @@
 class ImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
-  include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  # include CarrierWave::RMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
   # storage :fog
+
+  process :auto_orient
+  # process :resize_to_fill => [960, 960]
+  process :resize_to_limit => [960, 960]
+
+  version :sketching do
+    process :sketching => [4, 0]
+  end
+
+  version :isolate do
+    process :isolate
+  end
+
+  version :isolate5 do
+    process :isolate => 5
+  end
+
+  version :hoge do
+    process :isolate => 5
+    process :sketching
+  end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -39,13 +60,32 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
-  def auto
+  def auto_orient
     manipulate! do |image|
       image.auto_orient
     end
   end
 
-  process :auto
+  def sketching(detail = 4, saturation = 100)
+    manipulate! do |image|
+      system "#{Rails.root.join('bin', 'sketching')} -d #{detail} -e 2 -s #{saturation} #{image.path} #{image.path}"
+      image = MiniMagick::Image.open(image.path)
+      image = yield(image) if block_given?
+      image
+    end
+  end
+
+  def isolate(t = 10)
+    manipulate! do |image|
+      c = 'red'
+      system <<-EOS
+#{Rails.root.join('bin', 'isolatecolor')} -c #{c} -t #{t} -S 0 -s 100 #{image.path} #{image.path}
+      EOS
+      image = MiniMagick::Image.open(image.path)
+      image = yield(image) if block_given?
+      image
+    end
+  end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
